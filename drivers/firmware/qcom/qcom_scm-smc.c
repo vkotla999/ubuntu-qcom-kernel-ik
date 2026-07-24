@@ -104,8 +104,9 @@ static int __scm_smc_do_quirk_handle_waitq(struct device *dev, struct arm_smccc_
 		if (res->a0 == QCOM_SCM_WAITQ_SLEEP) {
 			wq_ctx = res->a1;
 			smc_call_ctx = res->a2;
+			
+			ret = qcom_scm_wait_for_wq_completion(dev, wq_ctx);
 
-			ret = qcom_scm_wait_for_wq_completion(wq_ctx);
 			if (ret)
 				return ret;
 
